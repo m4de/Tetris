@@ -1,0 +1,37 @@
+/** Implements a Tetris game. */
+class TetrisGame {
+
+  field int foo; // TODO: remove
+
+  /** Constructs a new Tetris game. */
+  constructor TetrisGame new() {
+    return this;
+  }
+
+  /** Runs the game: handles the user’s inputs and moves the tetrominoes accordingly */
+  method void run() {
+    var char key; // the key currently pressed by the user
+    var boolean exit;
+    let exit = false;
+
+    while (~exit) {
+      // waits for a key to be pressed
+      while (key = 0) {
+        let key = Keyboard.keyPressed();
+      }
+      if (key = 81) { let exit = true; } // q key
+
+      // waits for the key to be released
+      while (~(key = 0)) {
+        let key = Keyboard.keyPressed();
+      }
+    } // while
+    return;
+  }
+
+  /** Disposes this game. */
+  method void dispose() {
+    do Memory.deAlloc(this);
+    return;
+  }
+}
