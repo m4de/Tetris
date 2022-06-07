@@ -1,11 +1,28 @@
 /** Implements a Tetris game. */
 class TetrisGame {
 
-  field int foo; // TODO: remove
+  field int screenWidth;
+  field int screenHeight;
+
+  field int squareSize;
+  field Square square;
+  field int direction;
 
   /** Constructs a new Tetris game. */
   constructor TetrisGame new() {
+    let screenWidth = 512;
+    let screenHeight = 256;
+
+    let squareSize = 14;
+    let square = Square.new((screenWidth / 2) - (squareSize / 2), 0, squareSize); // 18*14+4=256
+    let direction = 2;
     return this;
+  }
+
+  /** Disposes this game. */
+  method void dispose() {
+    do Memory.deAlloc(this);
+    return;
   }
 
   /** Runs the game: handles the user’s inputs and moves the tetrominoes accordingly */
@@ -18,20 +35,22 @@ class TetrisGame {
       // waits for a key to be pressed
       while (key = 0) {
         let key = Keyboard.keyPressed();
+        do moveSquare();
       }
       if (key = 81) { let exit = true; } // q key
 
       // waits for the key to be released
       while (~(key = 0)) {
         let key = Keyboard.keyPressed();
+        do moveSquare();
       }
     } // while
     return;
   }
 
-  /** Disposes this game. */
-  method void dispose() {
-    do Memory.deAlloc(this);
+  method void moveSquare() {
+    if (direction = 2) { do square.moveDown(); }
+    do Sys.wait(1000); // delays the next movement
     return;
   }
 }
