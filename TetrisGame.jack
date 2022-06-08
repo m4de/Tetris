@@ -31,6 +31,9 @@ class TetrisGame {
     var boolean exit;
     let exit = false;
 
+    // draw the user interface
+    do drawUI();
+
     while (~exit) {
       // waits for a key to be pressed
       while (key = 0) {
@@ -47,6 +50,21 @@ class TetrisGame {
         do moveSquare();
       }
     } // while
+    return;
+  }
+
+  /** Draws the user interface. */
+  method void drawUI() {
+    // print menu
+    do Output.moveCursor(10,8);
+    do Output.printString("Tetris");
+    do Output.moveCursor(13,7);
+    do Output.printString("(q) Quit");
+    // draw playing field
+    do Screen.drawRectangle(181,0,185,255);
+    do Screen.drawRectangle(327,0,331,255);
+    // draw first tetromino
+    do square.draw();
     return;
   }
 
