@@ -14,7 +14,7 @@ class TetrisGame {
     let screenHeight = 256;
 
     let squareSize = 14;
-    let square = Square.new((screenWidth / 2) - (squareSize / 2), 0, squareSize); // 18*14+4=256
+    let square = Square.new((screenWidth / 2) - squareSize, 0, squareSize); // 18*14+4=256
     let direction = 2;
     return this;
   }
@@ -38,6 +38,8 @@ class TetrisGame {
         do moveSquare();
       }
       if (key = 81) { let exit = true; } // q key
+      if (key = 130) { let direction = 3; } // left arrow
+      if (key = 132) { let direction = 4; } // right arrow
 
       // waits for the key to be released
       while (~(key = 0)) {
@@ -50,6 +52,9 @@ class TetrisGame {
 
   method void moveSquare() {
     if (direction = 2) { do square.moveDown(); }
+    if (direction = 3) { do square.moveLeft(); }
+    if (direction = 4) { do square.moveRight(); }
+    let direction = 2;
     do Sys.wait(1000); // delays the next movement
     return;
   }

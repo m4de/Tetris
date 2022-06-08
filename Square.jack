@@ -42,4 +42,24 @@ class Square {
     }
     return;
   }
+
+  /** Moves the square left by `size` pixels. */
+  method void moveLeft() {
+    if (x > 186) {
+      do erase();
+      let x = x - size;
+      do draw();
+    }
+    return;
+  }
+
+  /** Moves the square right by `size` pixels. */
+  method void moveRight() {
+    if (x < 312) {
+      do erase();
+      let x = x + size;
+      do draw();
+    }
+    return;
+  }
 }
