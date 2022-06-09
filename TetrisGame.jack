@@ -78,7 +78,14 @@ class TetrisGame {
   }
 
   method void moveSquare() {
-    if (direction = 2) { do square.moveDown(); }
+    var boolean isdown;
+    if (direction = 2) {
+      let isdown = square.moveDown();
+      if (isdown) {
+
+          let square = Square.new((screenWidth / 2) - squareSize, 0, squareSize);
+      }
+    }
     if (direction = 3) {
       do square.moveLeft();
       let direction = 2;
@@ -87,7 +94,7 @@ class TetrisGame {
       do square.moveRight();
       let direction = 2;
     }
-    do Sys.wait(1000); // delays the next movement
+    do Sys.wait(100); // delays the next movement
     return;
   }
 }
