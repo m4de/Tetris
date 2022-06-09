@@ -1,20 +1,12 @@
 /** Implements a Tetris game. */
 class TetrisGame {
 
-  field int screenWidth;
-  field int screenHeight;
-
-  field int squareSize;
   field Square square;
   field int direction;
 
   /** Constructs a new Tetris game. */
   constructor TetrisGame new() {
-    let screenWidth = 512;
-    let screenHeight = 256;
-
-    let squareSize = 14;
-    let square = Square.new((screenWidth / 2) - squareSize, 0, squareSize); // 18*14+4=256
+    let square = Square.new(4, 0); // 18*14+4=256
     let direction = 0;
     return this;
   }
@@ -78,12 +70,11 @@ class TetrisGame {
   }
 
   method void moveSquare() {
-    var boolean isdown;
+    var boolean isDown;
     if (direction = 2) {
-      let isdown = square.moveDown();
-      if (isdown) {
-
-          let square = Square.new((screenWidth / 2) - squareSize, 0, squareSize);
+      let isDown = square.moveDown();
+      if (isDown) {
+        let square = Square.new(4, 0);
       }
     }
     if (direction = 3) {
