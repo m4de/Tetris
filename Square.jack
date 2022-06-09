@@ -4,11 +4,15 @@ class Square {
   field int x, y; // screen location of the square's top-left corner
   field int size; // length of this square, in pixels
 
+  field int xpos, ypos; // position of the square in the 10*18 grid
+
   /** Constructs a new square with a given location and size. */
-  constructor Square new(int Ax, int Ay, int Asize) {
-    let x = Ax;
-    let y = Ay;
-    let size = Asize;
+  constructor Square new(int Axpos, int Aypos) {
+    let size = 14;
+    let x = (512 / 2) - size;
+    let y = 0;
+    let xpos = Axpos;
+    let ypos = Aypos;
     do draw();
     return this;
   }
@@ -36,10 +40,11 @@ class Square {
   /** Moves the square down by `size` pixels. */
   method boolean moveDown() {
     var boolean isDown;
-    if (y < (255 - (size * 2))) {
+    if (ypos < 17) {
       do erase();
       let y = y + size;
       do draw();
+      let ypos = ypos + 1;
       let isDown = false;
     } else {
       let isDown = true;
@@ -49,20 +54,22 @@ class Square {
 
   /** Moves the square left by `size` pixels. */
   method void moveLeft() {
-    if (x > 186) {
+    if (xpos > 0) {
       do erase();
       let x = x - size;
       do draw();
+      let xpos = xpos - 1;
     }
     return;
   }
 
   /** Moves the square right by `size` pixels. */
   method void moveRight() {
-    if (x < 312) {
+    if (xpos < 9) {
       do erase();
       let x = x + size;
       do draw();
+      let xpos = xpos + 1;
     }
     return;
   }
