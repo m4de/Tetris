@@ -1,11 +1,27 @@
 /** Implements a Tetris game. */
 class TetrisGame {
 
+  field int gridWidth;
+  field int gridHeight;
+  field int gridSize;
+  field Array grid;
+
   field Square square;
   field int direction;
 
   /** Constructs a new Tetris game. */
   constructor TetrisGame new() {
+    var int i;
+    let gridWidth = 10;
+    let gridHeight = 18;
+    let gridSize = gridWidth * gridHeight;
+    let grid = Array.new(gridSize);
+    let i = 0;
+    while (i < gridSize) {
+      let grid[i] = false;
+      let i = i + 1;
+    }
+
     let square = Square.new(4, 0); // 18*14+4=256
     let direction = 0;
     return this;
@@ -70,11 +86,25 @@ class TetrisGame {
   }
 
   method void moveSquare() {
-    var boolean isDown;
+    var int xpos;
+    var int ypos;
+    var int ydest;
+    let xpos = square.getXpos();
+    let ypos = square.getYpos();
     if (direction = 2) {
-      let isDown = square.moveDown();
-      if (isDown) {
-        let square = Square.new(4, 0);
+      let ydest = ypos + 1;
+      if (ydest < gridHeight) {
+        if (ydest = (gridHeight - 1)) {
+          do square.moveDown();
+          let grid[(ydest * gridWidth) + xpos] = true;
+          let square = Square.new(4, 0);
+        } else {
+          do square.moveDown();
+          if (grid[((ydest+1) * gridWidth) + xpos]) {
+            let grid[((ydest) * gridWidth) + xpos] = true;
+            let square = Square.new(4, 0);
+          }
+        }
       }
     }
     if (direction = 3) {

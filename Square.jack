@@ -38,18 +38,14 @@ class Square {
   }
 
   /** Moves the square down by `size` pixels. */
-  method boolean moveDown() {
-    var boolean isDown;
+  method void moveDown() {
     if (ypos < 17) {
       do erase();
       let y = y + size;
       do draw();
       let ypos = ypos + 1;
-      let isDown = false;
-    } else {
-      let isDown = true;
     }
-    return isDown;
+    return;
   }
 
   /** Moves the square left by `size` pixels. */
@@ -72,5 +68,13 @@ class Square {
       let xpos = xpos + 1;
     }
     return;
+  }
+
+  method int getXpos() {
+    return xpos;
+  }
+
+  method int getYpos() {
+    return ypos;
   }
 }
