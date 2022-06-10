@@ -10,7 +10,7 @@ class Square {
   constructor Square new(int Axpos, int Aypos) {
     let size = 14;
     let x = (512 / 2) - size;
-    let y = 0;
+    let y = 3;
     let xpos = Axpos;
     let ypos = Aypos;
     do draw();

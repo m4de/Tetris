@@ -1,29 +1,22 @@
 /** Implements a Tetris game. */
 class TetrisGame {
 
+  field boolean exit;
+
   field int gridWidth;
   field int gridHeight;
   field int gridSize;
-  field Array grid;
+  field Array playfield;
 
   field Square square;
   field int direction;
 
   /** Constructs a new Tetris game. */
   constructor TetrisGame new() {
-    var int i;
     let gridWidth = 10;
     let gridHeight = 18;
     let gridSize = gridWidth * gridHeight;
-    let grid = Array.new(gridSize);
-    let i = 0;
-    while (i < gridSize) {
-      let grid[i] = false;
-      let i = i + 1;
-    }
-
-    let square = Square.new(4, 0); // 18*14+4=256
-    let direction = 0;
+    let exit = false;
     return this;
   }
 
@@ -36,8 +29,6 @@ class TetrisGame {
   /** Runs the game: handles the user’s inputs and moves the tetrominoes accordingly */
   method void run() {
     var char key; // the key currently pressed by the user
-    var boolean exit;
-    let exit = false;
 
     // draw the user interface
     do drawUI();
@@ -46,17 +37,13 @@ class TetrisGame {
       // waits for a key to be pressed
       while (key = 0) {
         let key = Keyboard.keyPressed();
-        do moveSquare();
       }
-      if (key = 78) { do startNewGame(); }  // n key
-      if (key = 81) { let exit = true; }    // q key
-      if (key = 130) { let direction = 3; } // left arrow
-      if (key = 132) { let direction = 4; } // right arrow
+      if (key = 78) { do newGame(); }  // n key
+      if (key = 81) { do quit(); }    // q key
 
       // waits for the key to be released
       while (~(key = 0)) {
         let key = Keyboard.keyPressed();
-        do moveSquare();
       }
     } // while
     return;
@@ -65,23 +52,74 @@ class TetrisGame {
   /** Draws the user interface. */
   method void drawUI() {
     // print menu
-    do Output.moveCursor(8,8);
+    do Output.moveCursor(6,8);
     do Output.printString("Tetris");
-    do Output.moveCursor(11,5);
-    do Output.printString("(n) New Game");
-    do Output.moveCursor(13,5);
-    do Output.printString("(q) Quit");
+    do Output.moveCursor(9,6);
+    do Output.printString("(N)ew Game");
+    do Output.moveCursor(11,6);
+    do Output.printString("<=> Move");
+    do Output.moveCursor(13,6);
+    do Output.printString("(Q)uit");
     // draw playing field
     do Screen.drawRectangle(181,0,185,255);
     do Screen.drawRectangle(327,0,331,255);
-    // draw first tetromino
-    do square.draw();
+    // print right menu
+    do Output.moveCursor(4,50);
+    do Output.printString("Score:");
+    do Output.moveCursor(6,52);
+    do Output.printString("0");
+    do Output.moveCursor(15,50);
+    do Output.printString("Next:");
+    do Screen.setColor(true);
+    do Screen.drawRectangle(410, 190, 410 + 14, 190 + 14);
     return;
   }
 
   /** Starts a new game. */
-  method void startNewGame() {
+  method void newGame() {
+    var char key; // the key currently pressed by the user
+
+    do resetPlayfield();
+
+    let square = Square.new(4, 0); // 18*14+4=256
     let direction = 2;
+
+    while (~exit) {
+      // waits for a key to be pressed
+      while (key = 0) {
+        let key = Keyboard.keyPressed();
+        do moveSquare();
+      }
+      if (key = 78) { do newGame(); }  // n key
+      if (key = 81) { do quit(); }    // q key
+      if (key = 130) { let direction = 3; } // left arrow
+      if (key = 132) { let direction = 4; } // right arrow
+
+      // waits for the key to be released
+      while (~(key = 0)) {
+        let key = Keyboard.keyPressed();
+        do moveSquare();
+      }
+    }
+    return;
+  }
+
+  /** Quits the game. */
+  method void quit() {
+    do Screen.clearScreen();
+    let exit = true;
+    return;
+  }
+
+  /** Resets the playfield. */
+  method void resetPlayfield() {
+    var int i;
+    let playfield = Array.new(gridSize);
+    let i = 0;
+    while (i < gridSize) {
+      let playfield[i] = null;
+      let i = i + 1;
+    }
     return;
   }
 
@@ -96,12 +134,12 @@ class TetrisGame {
       if (ydest < gridHeight) {
         if (ydest = (gridHeight - 1)) {
           do square.moveDown();
-          let grid[(ydest * gridWidth) + xpos] = true;
+          let playfield[(ydest * gridWidth) + xpos] = square;
           let square = Square.new(4, 0);
         } else {
           do square.moveDown();
-          if (grid[((ydest+1) * gridWidth) + xpos]) {
-            let grid[((ydest) * gridWidth) + xpos] = true;
+          if (playfield[((ydest+1) * gridWidth) + xpos]) {
+            let playfield[((ydest) * gridWidth) + xpos] = square;
             let square = Square.new(4, 0);
           }
         }
