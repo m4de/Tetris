@@ -3,19 +3,13 @@ class TetrisGame {
 
   field boolean exit;
 
-  field int gridWidth;
-  field int gridHeight;
-  field int gridSize;
-  field Array playfield;
+  field Playfield playfield;
 
   field Square square;
   field int direction;
 
   /** Constructs a new Tetris game. */
   constructor TetrisGame new() {
-    let gridWidth = 10;
-    let gridHeight = 18;
-    let gridSize = gridWidth * gridHeight;
     let exit = false;
     return this;
   }
@@ -113,13 +107,7 @@ class TetrisGame {
 
   /** Resets the playfield. */
   method void resetPlayfield() {
-    var int i;
-    let playfield = Array.new(gridSize);
-    let i = 0;
-    while (i < gridSize) {
-      let playfield[i] = null;
-      let i = i + 1;
-    }
+    let playfield = Playfield.new();
     return;
   }
 
@@ -131,15 +119,15 @@ class TetrisGame {
     let ypos = square.getYpos();
     if (direction = 2) {
       let ydest = ypos + 1;
-      if (ydest < gridHeight) {
-        if (ydest = (gridHeight - 1)) {
+      if (ydest < playfield.getHeight()) {
+        if (ydest = (playfield.getHeight() - 1)) {
           do square.moveDown();
-          let playfield[(ydest * gridWidth) + xpos] = square;
+          do playfield.setSquare(square, (ydest * playfield.getWidth()) + xpos);
           let square = Square.new(4, 0);
         } else {
           do square.moveDown();
-          if (playfield[((ydest+1) * gridWidth) + xpos]) {
-            let playfield[((ydest) * gridWidth) + xpos] = square;
+          if (playfield.getSquare(((ydest+1) * playfield.getWidth()) + xpos)) {
+            do playfield.setSquare(square, ((ydest) * playfield.getWidth()) + xpos);
             let square = Square.new(4, 0);
           }
         }

@@ -1,0 +1,50 @@
+/** Implements a playfield */
+class Playfield {
+
+  field int gridWidth;
+  field int gridHeight;
+  field int gridSize;
+  field Array grid;
+
+  /** Constructs a new Playfield. */
+  constructor Playfield new() {
+    var int i;
+    let gridWidth = 10;
+    let gridHeight = 18;
+    let gridSize = gridWidth * gridHeight;
+    let grid = Array.new(gridSize);
+    let i = 0;
+    while (i < gridSize) {
+      let grid[i] = null;
+      let i = i + 1;
+    }
+    return this;
+  }
+
+  /** Disposes this playfield. */
+  method void dispose() {
+    do Memory.deAlloc(this);
+    return;
+  }
+
+  /** Gets the playfield width. */
+  method int getWidth() {
+    return gridWidth;
+  }
+
+  /** Gets the playfield height. */
+  method int getHeight() {
+    return gridHeight;
+  }
+
+  /** Gets a square from the playfield. */
+  method Square getSquare(int position) {
+    return grid[position];
+  }
+
+  /** Sets a square on the playfield. */
+  method void setSquare(Square square, int position) {
+    let grid[position] = square;
+    return;
+  }
+}
