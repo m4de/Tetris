@@ -5,6 +5,8 @@ class Playfield {
   field int gridHeight;
   field Array grid;
 
+  field Square square;
+
   /** Constructs a new Playfield. */
   constructor Playfield new() {
     var int i;
@@ -43,10 +45,42 @@ class Playfield {
   }
 
   /** Sets a square on the playfield. */
-  method void setSquare(Square square, int x, int y) {
+  method void setSquare(int x, int y) {
     var Array row;
     let row = grid[y];
     let row[x] = square;
     return;
+  }
+
+  /** Puts a new square from the playfield. */
+  method void newSquare() {
+    var int x;
+    var int y;
+    var Array row;
+    let x = 4;
+    let y = 0;
+    let row = grid[0];
+    let row[4] = Square.new(x,y);
+    let square = row[4];
+    return;
+  }
+
+  method void moveDown() {
+    do square.moveDown();
+    return;
+  }
+
+  method void moveLeft() {
+    do square.moveLeft();
+    return;
+  }
+
+  method void moveRight() {
+    do square.moveRight();
+    return;
+  }
+
+  method Square getCurrentSquare() {
+    return square;
   }
 }

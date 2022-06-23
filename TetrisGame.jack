@@ -5,7 +5,6 @@ class TetrisGame {
 
   field Playfield playfield;
 
-  field Square square;
   field int direction;
 
   /** Constructs a new Tetris game. */
@@ -75,7 +74,7 @@ class TetrisGame {
 
     do resetPlayfield();
 
-    let square = Square.new(4, 0); // 18*14+4=256
+    do playfield.newSquare();
     let direction = 2;
 
     while (~exit) {
@@ -115,30 +114,32 @@ class TetrisGame {
     var int xpos;
     var int ypos;
     var int ydest;
-    let xpos = square.getXpos();
-    let ypos = square.getYpos();
+    var Square s;
+    let s = playfield.getCurrentSquare();
+    let xpos = s.getXpos();
+    let ypos = s.getYpos();
     if (direction = 2) {
       let ydest = ypos + 1;
       if (ydest < playfield.getHeight()) {
         if (ydest = (playfield.getHeight() - 1)) {
-          do square.moveDown();
-          do playfield.setSquare(square, xpos, ydest);
-          let square = Square.new(4, 0);
+          do playfield.moveDown();
+          do playfield.setSquare(xpos, ydest);
+          do playfield.newSquare();
         } else {
-          do square.moveDown();
+          do playfield.moveDown();
           if (playfield.getSquare(xpos, ydest + 1)) {
-            do playfield.setSquare(square, xpos, ydest);
-            let square = Square.new(4, 0);
+            do playfield.setSquare(xpos, ydest);
+            do playfield.newSquare();
           }
         }
       }
     }
     if (direction = 3) {
-      do square.moveLeft();
+      do playfield.moveLeft();
       let direction = 2;
     }
     if (direction = 4) {
-      do square.moveRight();
+      do playfield.moveRight();
       let direction = 2;
     }
     do Sys.wait(100); // delays the next movement
