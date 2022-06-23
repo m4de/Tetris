@@ -3,7 +3,6 @@ class Playfield {
 
   field int gridWidth;
   field int gridHeight;
-  field int gridSize;
   field Array grid;
 
   /** Constructs a new Playfield. */
@@ -11,11 +10,10 @@ class Playfield {
     var int i;
     let gridWidth = 10;
     let gridHeight = 18;
-    let gridSize = gridWidth * gridHeight;
-    let grid = Array.new(gridSize);
+    let grid = Array.new(gridHeight);
     let i = 0;
-    while (i < gridSize) {
-      let grid[i] = null;
+    while (i < gridHeight) {
+      let grid[i] = Array.new(gridWidth);
       let i = i + 1;
     }
     return this;
@@ -38,13 +36,17 @@ class Playfield {
   }
 
   /** Gets a square from the playfield. */
-  method Square getSquare(int position) {
-    return grid[position];
+  method Square getSquare(int x, int y) {
+    var Array row;
+    let row = grid[y];
+    return row[x];
   }
 
   /** Sets a square on the playfield. */
-  method void setSquare(Square square, int position) {
-    let grid[position] = square;
+  method void setSquare(Square square, int x, int y) {
+    var Array row;
+    let row = grid[y];
+    let row[x] = square;
     return;
   }
 }
