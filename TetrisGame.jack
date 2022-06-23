@@ -2,6 +2,7 @@
 class TetrisGame {
 
   field boolean exit;
+  field boolean paused;
 
   field Playfield playfield;
 
@@ -10,6 +11,8 @@ class TetrisGame {
   /** Constructs a new Tetris game. */
   constructor TetrisGame new() {
     let exit = false;
+    let paused = false;
+    let playfield = Playfield.new();
     return this;
   }
 
@@ -50,8 +53,10 @@ class TetrisGame {
     do Output.moveCursor(9,6);
     do Output.printString("(N)ew Game");
     do Output.moveCursor(11,6);
-    do Output.printString("<=> Move");
+    do Output.printString("(P)ause");
     do Output.moveCursor(13,6);
+    do Output.printString("<=> Move");
+    do Output.moveCursor(15,6);
     do Output.printString("(Q)uit");
     // draw playing field
     do Screen.drawRectangle(181,0,185,255);
@@ -72,10 +77,12 @@ class TetrisGame {
   method void newGame() {
     var char key; // the key currently pressed by the user
 
-    do resetPlayfield();
+    do playfield.clear();
 
     do playfield.newSquare();
     let direction = 2;
+
+    do pause(false);
 
     while (~exit) {
       // waits for a key to be pressed
@@ -83,8 +90,9 @@ class TetrisGame {
         let key = Keyboard.keyPressed();
         do moveSquare();
       }
-      if (key = 78) { do newGame(); }  // n key
-      if (key = 81) { do quit(); }    // q key
+      if (key = 78) { do newGame(); }       // n key
+      if (key = 80) { do pause(~paused); }  // p key
+      if (key = 81) { do quit(); }          // q key
       if (key = 130) { let direction = 3; } // left arrow
       if (key = 132) { let direction = 4; } // right arrow
 
@@ -97,16 +105,29 @@ class TetrisGame {
     return;
   }
 
-  /** Quits the game. */
-  method void quit() {
-    do Screen.clearScreen();
-    let exit = true;
+  /** (Un)pauses the game. */
+  method void pause(boolean pause) {
+    if (pause) {
+      let direction = 0;
+      let paused = true;
+      do Output.moveCursor(10,48);
+      do Output.printString("* PAUSED *");
+    } else {
+      let direction = 2;
+      let paused = false;
+      do Output.moveCursor(10,48);
+      do Output.printString("          ");
+    }
     return;
   }
 
-  /** Resets the playfield. */
-  method void resetPlayfield() {
-    let playfield = Playfield.new();
+  /** Quits the game. */
+  method void quit() {
+    if (~paused) {
+      do pause(true);
+    }
+    do Screen.clearScreen();
+    let exit = true;
     return;
   }
 
