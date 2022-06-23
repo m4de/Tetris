@@ -122,12 +122,12 @@ class TetrisGame {
       if (ydest < playfield.getHeight()) {
         if (ydest = (playfield.getHeight() - 1)) {
           do square.moveDown();
-          do playfield.setSquare(square, (ydest * playfield.getWidth()) + xpos);
+          do playfield.setSquare(square, xpos, ydest);
           let square = Square.new(4, 0);
         } else {
           do square.moveDown();
-          if (playfield.getSquare(((ydest+1) * playfield.getWidth()) + xpos)) {
-            do playfield.setSquare(square, ((ydest) * playfield.getWidth()) + xpos);
+          if (playfield.getSquare(xpos, ydest + 1)) {
+            do playfield.setSquare(square, xpos, ydest);
             let square = Square.new(4, 0);
           }
         }
