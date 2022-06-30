@@ -109,4 +109,42 @@ class Playfield {
   method Square getCurrentSquare() {
     return square;
   }
+
+  /** Check if the bottom row is full. */
+  method boolean checkScore() {
+    var Array row;
+    var boolean full;
+    var Square s;
+    var int i;
+    var int j;
+    let full = true;
+    let i = 0;
+    let row = grid[gridHeight - 1];
+    while (full & (i < gridWidth)) {
+      if (row[i] = null) {
+         let full = false;
+      }
+      let i = i + 1;
+    }
+
+    if (full) {
+      let i = gridHeight - 1;
+      while (i > 0) {
+        let row = grid[i];
+        let j = 0;
+        while (j < gridWidth) {
+          if (~(row[j] = null)) {
+            let s = row[j];
+            do s.erase();
+            do s.dispose();
+            let s = null;
+            let row[j] = null;
+          }
+          let j = j + 1;
+        }
+        let i = i - 1;
+      }
+    }
+    return full;
+  }
 }

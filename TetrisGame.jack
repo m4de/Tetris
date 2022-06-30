@@ -6,6 +6,8 @@ class TetrisGame {
 
   field Playfield playfield;
 
+  field int score;
+
   field int direction;
 
   /** Constructs a new Tetris game. */
@@ -13,6 +15,7 @@ class TetrisGame {
     let exit = false;
     let paused = false;
     let playfield = Playfield.new();
+    let score = 0;
     return this;
   }
 
@@ -65,7 +68,7 @@ class TetrisGame {
     do Output.moveCursor(4,50);
     do Output.printString("Score:");
     do Output.moveCursor(6,52);
-    do Output.printString("0");
+    do Output.printInt(score);
     do Output.moveCursor(15,50);
     do Output.printString("Next:");
     do Screen.setColor(true);
@@ -78,6 +81,10 @@ class TetrisGame {
     var char key; // the key currently pressed by the user
 
     do playfield.clear();
+
+    let score = 0;
+    do Output.moveCursor(6,52);
+    do Output.printInt(score);
 
     do playfield.newSquare();
     let direction = 2;
@@ -136,20 +143,28 @@ class TetrisGame {
     var int ypos;
     var int ydest;
     var Square s;
+    var boolean scored;
     let s = playfield.getCurrentSquare();
     let xpos = s.getXpos();
     let ypos = s.getYpos();
     if (direction = 2) {
       let ydest = ypos + 1;
       if (ydest < playfield.getHeight()) {
+        do playfield.moveDown();
         if (ydest = (playfield.getHeight() - 1)) {
-          do playfield.moveDown();
           do playfield.setSquare(xpos, ydest);
+          let scored = playfield.checkScore();
+          if (scored) {
+            do updateScore();
+          }
           do playfield.newSquare();
         } else {
-          do playfield.moveDown();
           if (playfield.getSquare(xpos, ydest + 1)) {
             do playfield.setSquare(xpos, ydest);
+            let scored = playfield.checkScore();
+            if (scored) {
+              do updateScore();
+            }
             do playfield.newSquare();
           }
         }
@@ -164,6 +179,14 @@ class TetrisGame {
       let direction = 2;
     }
     do Sys.wait(100); // delays the next movement
+    return;
+  }
+
+  /** Updates the score. */
+  method void updateScore() {
+    let score = score + 1;
+    do Output.moveCursor(6,52);
+    do Output.printInt(score);
     return;
   }
 }
