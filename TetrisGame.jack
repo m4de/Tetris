@@ -67,8 +67,7 @@ class TetrisGame {
     // print right menu
     do Output.moveCursor(4,50);
     do Output.printString("Score:");
-    do Output.moveCursor(6,52);
-    do Output.printInt(score);
+    do drawScore();
     do Output.moveCursor(15,50);
     do Output.printString("Next:");
     do Screen.setColor(true);
@@ -153,17 +152,19 @@ class TetrisGame {
         do playfield.moveDown();
         if (ydest = (playfield.getHeight() - 1)) {
           do playfield.setSquare(xpos, ydest);
-          let scored = playfield.checkScore();
+          let scored = checkScore();
           if (scored) {
-            do updateScore();
+            let score = score + 1;
+            do drawScore();
           }
           do playfield.newSquare();
         } else {
           if (playfield.getSquare(xpos, ydest + 1)) {
             do playfield.setSquare(xpos, ydest);
-            let scored = playfield.checkScore();
+            let scored = checkScore();
             if (scored) {
-              do updateScore();
+              let score = score + 1;
+              do drawScore();
             }
             do playfield.newSquare();
           }
@@ -182,9 +183,39 @@ class TetrisGame {
     return;
   }
 
-  /** Updates the score. */
-  method void updateScore() {
-    let score = score + 1;
+  /** Check if the bottom row is full. */
+  method boolean checkScore() {
+    var Array grid;
+    var Array row;
+    var boolean full;
+    var int i;
+    let grid = playfield.getGrid();
+    let full = true;
+    let i = 0;
+    let row = grid[playfield.getHeight() - 1];
+    while (full & (i < playfield.getWidth())) {
+      if (row[i] = null) {
+         let full = false;
+      }
+      let i = i + 1;
+    }
+
+    if (full) {
+      let i = playfield.getHeight() - 1;
+      while (i > 0) {
+        if (i = (playfield.getHeight() - 1)) {
+          do playfield.clearRow(i);
+        } else {
+          do playfield.shiftRow(i);
+        }
+        let i = i - 1;
+      }
+    }
+    return full;
+  }
+
+  /** Draws the score on the screen. */
+  method void drawScore() {
     do Output.moveCursor(6,52);
     do Output.printInt(score);
     return;
