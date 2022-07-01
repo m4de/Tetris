@@ -63,6 +63,11 @@ class Playfield {
     return gridHeight;
   }
 
+  /** Gets the grid. */
+  method Array getGrid() {
+    return grid;
+  }
+
   /** Gets a square from the playfield. */
   method Square getSquare(int x, int y) {
     var Array row;
@@ -110,41 +115,42 @@ class Playfield {
     return square;
   }
 
-  /** Check if the bottom row is full. */
-  method boolean checkScore() {
-    var Array row;
-    var boolean full;
-    var Square s;
-    var int i;
+  /** Clears the bottom row after scoring. */
+  method void clearRow(int rowIndex) {
     var int j;
-    let full = true;
-    let i = 0;
-    let row = grid[gridHeight - 1];
-    while (full & (i < gridWidth)) {
-      if (row[i] = null) {
-         let full = false;
-      }
-      let i = i + 1;
+    var Array row;
+    var Square s;
+    let j = 0;
+    let row = grid[rowIndex];
+    while (j < gridWidth) {
+      let s = row[j];
+      do s.erase();
+      do s.dispose();
+      let s = null;
+      let row[j] = null;
+      let j = j + 1;
     }
+    return;
+  }
 
-    if (full) {
-      let i = gridHeight - 1;
-      while (i > 0) {
-        let row = grid[i];
-        let j = 0;
-        while (j < gridWidth) {
-          if (~(row[j] = null)) {
-            let s = row[j];
-            do s.erase();
-            do s.dispose();
-            let s = null;
-            let row[j] = null;
-          }
-          let j = j + 1;
-        }
-        let i = i - 1;
+  /** Shifts a row down */
+  method void shiftRow(int rowIndex) {
+    var int j;
+    var Array row;
+    var Array nextRow;
+    var Square s;
+    let row = grid[rowIndex];
+    let nextRow = grid[rowIndex + 1];
+    let j = 0;
+    while (j < gridWidth) {
+      if (~(row[j] = null)) {
+        let s = row[j];
+        do s.moveDown();
+        let row[j] = null;
+        let nextRow[j] = s;
       }
+      let j = j + 1;
     }
-    return full;
+    return;
   }
 }
