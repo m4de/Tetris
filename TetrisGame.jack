@@ -172,11 +172,15 @@ class TetrisGame {
       }
     }
     if (direction = 3) {
-      do playfield.moveLeft();
+      if (playfield.getSquare(xpos - 1, ypos) = null) {
+        do playfield.moveLeft();
+      }
       let direction = 2;
     }
     if (direction = 4) {
-      do playfield.moveRight();
+      if (playfield.getSquare(xpos + 1, ypos) = null) {
+        do playfield.moveRight();
+      }
       let direction = 2;
     }
     do Sys.wait(100); // delays the next movement
