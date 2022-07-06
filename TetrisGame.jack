@@ -143,7 +143,7 @@ class TetrisGame {
     var int ydest;
     var Square s;
     var Tetromino t;
-    var boolean scored;
+    var int scored;
     let t = playfield.getCurrentTetromino();
     let xpos = t.getXpos();
     let ypos = t.getYpos();
@@ -154,19 +154,15 @@ class TetrisGame {
         if (ydest = (playfield.getHeight() - 2)) {
           do playfield.setTetromino(t);
           let scored = checkScore();
-          if (scored) {
-            let score = score + 1;
-            do drawScore();
-          }
+          let score = score + scored;
+          do drawScore();
           do playfield.newTetromino();
         } else {
           if ((playfield.getSquare(xpos, ydest + 2)) | (playfield.getSquare(xpos + 1, ydest + 2))) {
             do playfield.setTetromino(t);
             let scored = checkScore();
-            if (scored) {
-              let score = score + 1;
-              do drawScore();
-            }
+            let score = score + scored;
+            do drawScore();
             do playfield.newTetromino();
           }
         }
@@ -195,34 +191,39 @@ class TetrisGame {
   }
 
   /** Check if the bottom row is full. */
-  method boolean checkScore() {
+  method int checkScore() {
+    var int i;
+    var int j;
+    var int k;
+    var int score;
+    var boolean full;
     var Array grid;
     var Array row;
-    var boolean full;
-    var int i;
+    let score = 0;
     let grid = playfield.getGrid();
-    let full = true;
     let i = 0;
-    let row = grid[playfield.getHeight() - 1];
-    while (full & (i < playfield.getWidth())) {
-      if (row[i] = null) {
-         let full = false;
+    while (i < playfield.getHeight()) {
+      let row = grid[i];
+      let full = true;
+      let j = 0;
+      while (j < playfield.getWidth()) {
+        if (row[j] = null) {
+           let full = false;
+        }
+        let j = j + 1;
+      }
+      if (full) {
+        do playfield.clearRow(i);
+        let k = 0;
+        while (k < i) {
+          do playfield.shiftRow(k);
+          let k = k + 1;
+        }
+        let score = score + 1;
       }
       let i = i + 1;
     }
-
-    if (full) {
-      let i = playfield.getHeight() - 1;
-      while (i > 0) {
-        if (i = (playfield.getHeight() - 1)) {
-          do playfield.clearRow(i);
-        } else {
-          do playfield.shiftRow(i);
-        }
-        let i = i - 1;
-      }
-    }
-    return full;
+    return score;
   }
 
   /** Draws the score on the screen. */
