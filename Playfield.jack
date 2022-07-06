@@ -5,7 +5,7 @@ class Playfield {
   field int gridHeight;
   field Array grid;
 
-  field Square square;
+  field Tetromino tetromino;
 
   /** Constructs a new Playfield. */
   constructor Playfield new() {
@@ -47,8 +47,8 @@ class Playfield {
       }
       let i = i + 1;
     }
-    if (~(square = null)) {
-      do square.erase();
+    if (~(tetromino = null)) {
+      do tetromino.erase();
     }
     return;
   }
@@ -75,44 +75,49 @@ class Playfield {
     return row[x];
   }
 
-  /** Sets a square on the playfield. */
-  method void setSquare(int x, int y) {
+  /** Sets a tetromino on the playfield. */
+  method void setTetromino(Tetromino t) {
+    var int i;
+    var int xpos;
+    var int ypos;
     var Array row;
-    let row = grid[y];
-    let row[x] = square;
+    var Array squares;
+    var Square square;
+    let i = 0;
+    let squares = t.getSquares();
+    while (i < 4) {
+      let square = squares[i];
+      let ypos = square.getYpos();
+      let row = grid[ypos];
+      let row[square.getXpos()] = square;
+      let i = i + 1;
+    }
     return;
   }
 
-  /** Puts a new square from the playfield. */
-  method void newSquare() {
-    var int x;
-    var int y;
-    var Array row;
-    let x = 4;
-    let y = 0;
-    let row = grid[0];
-    let row[4] = Square.new(x,y);
-    let square = row[4];
+  /** Puts a new tetromino on the playfield. */
+  method void newTetromino() {
+    let tetromino = Tetromino.new(4, 0);
     return;
   }
 
   method void moveDown() {
-    do square.moveDown();
+    do tetromino.moveDown();
     return;
   }
 
   method void moveLeft() {
-    do square.moveLeft();
+    do tetromino.moveLeft();
     return;
   }
 
   method void moveRight() {
-    do square.moveRight();
+    do tetromino.moveRight();
     return;
   }
 
-  method Square getCurrentSquare() {
-    return square;
+  method Tetromino getCurrentTetromino() {
+    return tetromino;
   }
 
   /** Clears the bottom row after scoring. */

@@ -1,0 +1,106 @@
+class Tetromino {
+
+  field int numberOfSquares;
+  field Array squares;
+
+  field int xpos, ypos; // position of the square in the 10*18 grid
+
+  constructor Tetromino new(int Axpos, int Aypos) {
+    let numberOfSquares = 4;
+    let xpos = Axpos;
+    let ypos = Aypos;
+    let squares = Array.new(numberOfSquares);
+    let squares[2] = Square.new(Axpos, Aypos);
+    let squares[0] = Square.new(Axpos, Aypos + 1);
+    let squares[3] = Square.new(Axpos + 1, Aypos);
+    let squares[1] = Square.new(Axpos + 1, Aypos + 1);
+    do draw();
+    return this;
+  }
+
+  /** Disposes this tetromino. */
+  method void dispose() {
+    do Memory.deAlloc(this);
+    return;
+  }
+
+  /** Draws the tetromino on the screen. */
+  method void draw() {
+    var int i;
+    var Square square;
+    let i = 0;
+    while (i < numberOfSquares) {
+      let square = squares[i];
+      do square.draw();
+      let i = i + 1;
+    }
+    return;
+  }
+
+  /** Erases the tetromino from the screen. */
+  method void erase() {
+    var int i;
+    var Square square;
+    let i = 0;
+    while (i < numberOfSquares) {
+      let square = squares[i];
+      do square.erase();
+      let i = i + 1;
+    }
+    return;
+  }
+
+  /** Moves the tetromino down by `size` pixels. */
+  method void moveDown() {
+    var int i;
+    var Square square;
+    let i = 0;
+    while (i < numberOfSquares) {
+      let square = squares[i];
+      do square.moveDown();
+      let i = i + 1;
+    }
+    let ypos = ypos + 1;
+    return;
+  }
+
+  /** Moves the tetromino left by `size` pixels. */
+  method void moveLeft() {
+    var int i;
+    var Square square;
+    let i = 0;
+    while (i < numberOfSquares) {
+      let square = squares[i];
+      do square.moveLeft();
+      let i = i + 1;
+    }
+    let xpos = xpos - 1;
+    return;
+  }
+
+  /** Moves the tetromino left by `size` pixels. */
+  method void moveRight() {
+    var int i;
+    var Square square;
+    let i = 0;
+    while (i < numberOfSquares) {
+      let square = squares[i];
+      do square.moveRight();
+      let i = i + 1;
+    }
+    let xpos = xpos + 1;
+    return;
+  }
+
+  method int getXpos() {
+    return xpos;
+  }
+
+  method int getYpos() {
+    return ypos;
+  }
+
+  method Array getSquares() {
+    return squares;
+  }
+}

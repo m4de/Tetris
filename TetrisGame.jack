@@ -82,10 +82,9 @@ class TetrisGame {
     do playfield.clear();
 
     let score = 0;
-    do Output.moveCursor(6,52);
-    do Output.printInt(score);
+    do drawScore();
 
-    do playfield.newSquare();
+    do playfield.newTetromino();
     let direction = 2;
 
     do pause(false);
@@ -140,46 +139,54 @@ class TetrisGame {
   method void moveSquare() {
     var int xpos;
     var int ypos;
+    var int xdest;
     var int ydest;
     var Square s;
+    var Tetromino t;
     var boolean scored;
-    let s = playfield.getCurrentSquare();
-    let xpos = s.getXpos();
-    let ypos = s.getYpos();
+    let t = playfield.getCurrentTetromino();
+    let xpos = t.getXpos();
+    let ypos = t.getYpos();
     if (direction = 2) {
       let ydest = ypos + 1;
-      if (ydest < playfield.getHeight()) {
+      if (ydest < (playfield.getHeight() - 1)) {
         do playfield.moveDown();
-        if (ydest = (playfield.getHeight() - 1)) {
-          do playfield.setSquare(xpos, ydest);
+        if (ydest = (playfield.getHeight() - 2)) {
+          do playfield.setTetromino(t);
           let scored = checkScore();
           if (scored) {
             let score = score + 1;
             do drawScore();
           }
-          do playfield.newSquare();
+          do playfield.newTetromino();
         } else {
-          if (playfield.getSquare(xpos, ydest + 1)) {
-            do playfield.setSquare(xpos, ydest);
+          if ((playfield.getSquare(xpos, ydest + 2)) | (playfield.getSquare(xpos + 1, ydest + 2))) {
+            do playfield.setTetromino(t);
             let scored = checkScore();
             if (scored) {
               let score = score + 1;
               do drawScore();
             }
-            do playfield.newSquare();
+            do playfield.newTetromino();
           }
         }
       }
     }
     if (direction = 3) {
-      if (playfield.getSquare(xpos - 1, ypos) = null) {
-        do playfield.moveLeft();
+      let xdest = xpos - 1;
+      if (xdest > (-(1))) {
+        if ((playfield.getSquare(xpos - 1, ypos) = null) & (playfield.getSquare(xpos - 1, ypos + 1) = null)) {
+          do playfield.moveLeft();
+        }
       }
       let direction = 2;
     }
     if (direction = 4) {
-      if (playfield.getSquare(xpos + 1, ypos) = null) {
-        do playfield.moveRight();
+      let xdest = xpos + 1;
+      if ((xdest + 1) < playfield.getWidth()) {
+        if ((playfield.getSquare(xpos + 1, ypos) = null) & (playfield.getSquare(xpos + 1, ypos + 1) = null)) {
+          do playfield.moveRight();
+        }
       }
       let direction = 2;
     }
