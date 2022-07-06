@@ -6,13 +6,18 @@ class Square {
 
   field int xpos, ypos; // position of the square in the 10*18 grid
 
+  field int xOffset;
+  field int yOffset;
+
   /** Constructs a new square with a given location and size. */
   constructor Square new(int Axpos, int Aypos) {
     let size = 14;
-    let x = (512 / 2) - size;
-    let y = 3;
+    let xOffset = 186;
+    let yOffset = 3;
     let xpos = Axpos;
     let ypos = Aypos;
+    let x = xOffset + (xpos * size);
+    let y = yOffset + (ypos * size);
     do draw();
     return this;
   }
@@ -41,9 +46,9 @@ class Square {
   method void moveDown() {
     if (ypos < 17) {
       do erase();
-      let y = y + size;
-      do draw();
       let ypos = ypos + 1;
+      let y = yOffset + (ypos * size);
+      do draw();
     }
     return;
   }
