@@ -3,6 +3,7 @@ class TetrisGame {
 
   field boolean exit;
   field boolean paused;
+  field boolean gameOver;
 
   field Playfield playfield;
 
@@ -14,6 +15,7 @@ class TetrisGame {
   constructor TetrisGame new() {
     let exit = false;
     let paused = false;
+    let gameOver = true;
     let playfield = Playfield.new();
     let score = 0;
     return this;
@@ -79,10 +81,14 @@ class TetrisGame {
   method void newGame() {
     var char key; // the key currently pressed by the user
 
+    let gameOver = false;
     do playfield.clear();
 
     let score = 0;
     do drawScore();
+
+    do Output.moveCursor(10,46);
+    do Output.printString("             ");
 
     do playfield.newTetromino();
     let direction = 2;
@@ -112,16 +118,18 @@ class TetrisGame {
 
   /** (Un)pauses the game. */
   method void pause(boolean pause) {
-    if (pause) {
-      let direction = 0;
-      let paused = true;
-      do Output.moveCursor(10,48);
-      do Output.printString("* PAUSED *");
-    } else {
-      let direction = 2;
-      let paused = false;
-      do Output.moveCursor(10,48);
-      do Output.printString("          ");
+    if (~gameOver) {
+      if (pause) {
+        let direction = 0;
+        let paused = true;
+        do Output.moveCursor(10,48);
+        do Output.printString("* PAUSED *");
+      } else {
+        let direction = 2;
+        let paused = false;
+        do Output.moveCursor(10,48);
+        do Output.printString("          ");
+      }
     }
     return;
   }
@@ -156,14 +164,24 @@ class TetrisGame {
           let scored = checkScore();
           let score = score + scored;
           do drawScore();
-          do playfield.newTetromino();
+          let gameOver = checkGameOver();
+          if (~gameOver) {
+            do playfield.newTetromino();
+          } else {
+            do gameOver();
+          }
         } else {
           if ((playfield.getSquare(xpos, ydest + 2)) | (playfield.getSquare(xpos + 1, ydest + 2))) {
             do playfield.setTetromino(t);
             let scored = checkScore();
             let score = score + scored;
             do drawScore();
-            do playfield.newTetromino();
+            let gameOver = checkGameOver();
+            if (~gameOver) {
+              do playfield.newTetromino();
+            } else {
+              do gameOver();
+            }
           }
         }
       }
@@ -224,6 +242,26 @@ class TetrisGame {
       let i = i + 1;
     }
     return score;
+  }
+
+  method boolean checkGameOver() {
+    var Array grid;
+    var Array row;
+    var boolean gameOver;
+    let grid = playfield.getGrid();
+    let row = grid[1];
+    let gameOver = false;
+    if (row[4] | row[5]) {
+      let gameOver = true;
+    }
+    return gameOver;
+  }
+
+  method void gameOver() {
+    let direction = 0;
+    do Output.moveCursor(10,46);
+    do Output.printString("* GAME OVER *");
+    return;
   }
 
   /** Draws the score on the screen. */
