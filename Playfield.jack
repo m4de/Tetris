@@ -5,8 +5,6 @@ class Playfield {
   field int gridHeight;
   field Array grid;
 
-  field Tetromino tetromino;
-
   /** Constructs a new Playfield. */
   constructor Playfield new() {
     var int i;
@@ -47,9 +45,6 @@ class Playfield {
       }
       let i = i + 1;
     }
-    if (~(tetromino = null)) {
-      do tetromino.erase();
-    }
     return;
   }
 
@@ -76,7 +71,7 @@ class Playfield {
   }
 
   /** Sets a tetromino on the playfield. */
-  method void setTetromino(Tetromino t) {
+  method void setTetromino(Tetromino tetromino) {
     var int i;
     var int xpos;
     var int ypos;
@@ -84,7 +79,7 @@ class Playfield {
     var Array squares;
     var Square square;
     let i = 0;
-    let squares = t.getSquares();
+    let squares = tetromino.getSquares();
     while (i < 4) {
       let square = squares[i];
       let ypos = square.getYpos();
@@ -95,29 +90,41 @@ class Playfield {
     return;
   }
 
-  /** Puts a new tetromino on the playfield. */
-  method void newTetromino() {
-    let tetromino = Tetromino.new(4, 0);
-    return;
-  }
-
-  method void moveDown() {
-    do tetromino.moveDown();
-    return;
-  }
-
-  method void moveLeft() {
-    do tetromino.moveLeft();
-    return;
-  }
-
-  method void moveRight() {
-    do tetromino.moveRight();
-    return;
-  }
-
-  method Tetromino getCurrentTetromino() {
-    return tetromino;
+  /** Checks if there is space for a tetromino in the given direction */
+  method boolean isSpace(Tetromino tetromino, int direction) {
+    var boolean isSpace;
+    var int xpos;
+    var int ypos;
+    var int xdest;
+    var int ydest;
+    let isSpace = false;
+    let xpos = tetromino.getXpos();
+    let ypos = tetromino.getYpos();
+    if (direction = 2) {
+      let ydest = ypos + 1;
+      if (ydest < (getHeight() - 1)) {
+        if ((getSquare(xpos, ydest + 1) = null) & (getSquare(xpos + 1, ydest + 1) = null)) {
+          let isSpace = true;
+        }
+      }
+    }
+    if (direction = 3) {
+      let xdest = xpos - 1;
+      if (xdest > (-(1))) {
+        if ((getSquare(xpos - 1, ypos) = null) & (getSquare(xpos - 1, ypos + 1) = null)) {
+          let isSpace = true;
+        }
+      }
+    }
+    if (direction = 4) {
+      let xdest = xpos + 1;
+      if ((xdest + 1) < getWidth()) {
+        if ((getSquare(xpos + 1, ypos) = null) & (getSquare(xpos + 1, ypos + 1) = null)) {
+          let isSpace = true;
+        }
+      }
+    }
+    return isSpace;
   }
 
   /** Clears the bottom row after scoring. */
@@ -157,5 +164,17 @@ class Playfield {
       let j = j + 1;
     }
     return;
+  }
+
+  /** Checks if there is space for a new tetromino */
+  method boolean isFull() {
+    var Array row;
+    var boolean full;
+    let full = false;
+    let row = grid[1];
+    if (row[4] | row[5]) {
+      let full = true;
+    }
+    return full;
   }
 }
