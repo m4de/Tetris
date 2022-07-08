@@ -44,34 +44,28 @@ class Square {
 
   /** Moves the square down by `size` pixels. */
   method void moveDown() {
-    if (ypos < 17) {
-      do erase();
-      let ypos = ypos + 1;
-      let y = yOffset + (ypos * size);
-      do draw();
-    }
+    do erase();
+    let ypos = ypos + 1;
+    let y = yOffset + (ypos * size);
+    do draw();
     return;
   }
 
   /** Moves the square left by `size` pixels. */
   method void moveLeft() {
-    if (xpos > 0) {
-      do erase();
-      let x = x - size;
-      do draw();
-      let xpos = xpos - 1;
-    }
+    do erase();
+    let x = x - size;
+    do draw();
+    let xpos = xpos - 1;
     return;
   }
 
   /** Moves the square right by `size` pixels. */
   method void moveRight() {
-    if (xpos < 9) {
-      do erase();
-      let x = x + size;
-      do draw();
-      let xpos = xpos + 1;
-    }
+    do erase();
+    let x = x + size;
+    do draw();
+    let xpos = xpos + 1;
     return;
   }
 
