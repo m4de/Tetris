@@ -28,6 +28,7 @@ class TetrisGame {
     let gameOver = true;
     let playfield = Playfield.new();
     let score = 0;
+    do Random.setSeed(1638);
     return this;
   }
 
@@ -102,7 +103,7 @@ class TetrisGame {
     do Output.moveCursor(10,46);
     do Output.printString("             ");
 
-    let tetromino = Tetromino.new(4, 0);
+    let tetromino = Tetromino.new();
     let direction = down;
 
     do pause(false);
@@ -228,7 +229,7 @@ class TetrisGame {
       do Output.moveCursor(10,46);
       do Output.printString("* GAME OVER *");
     } else {
-      let tetromino = Tetromino.new(4, 0);
+      let tetromino = Tetromino.new();
     }
     return;
   }
