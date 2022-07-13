@@ -5,15 +5,14 @@ class Tetromino {
 
   field int xpos, ypos; // position of the square in the 10*18 grid
 
-  constructor Tetromino new(int Axpos, int Aypos) {
+  constructor Tetromino new() {
+    var int type;
     let numberOfSquares = 4;
-    let xpos = Axpos;
-    let ypos = Aypos;
     let squares = Array.new(numberOfSquares);
-    let squares[2] = Square.new(Axpos, Aypos);
-    let squares[0] = Square.new(Axpos, Aypos + 1);
-    let squares[3] = Square.new(Axpos + 1, Aypos);
-    let squares[1] = Square.new(Axpos + 1, Aypos + 1);
+
+    let type = Random.randRange(6);
+
+    do setType(type);
     do draw();
     return this;
   }
@@ -21,6 +20,68 @@ class Tetromino {
   /** Disposes this tetromino. */
   method void dispose() {
     do Memory.deAlloc(this);
+    return;
+  }
+
+  method void setType(int type) {
+    if (type = 0) {
+      let xpos = 4;
+      let ypos = 0;
+      let squares[2] = Square.new(xpos, ypos);
+      let squares[0] = Square.new(xpos, ypos + 1);
+      let squares[3] = Square.new(xpos + 1, ypos);
+      let squares[1] = Square.new(xpos + 1, ypos + 1);
+    }
+    if (type = 1) {
+      let xpos = 3;
+      let ypos = 0;
+      let squares[0] = Square.new(xpos, ypos);
+      let squares[1] = Square.new(xpos + 1, ypos);
+      let squares[2] = Square.new(xpos + 2, ypos);
+      let squares[3] = Square.new(xpos + 3, ypos);
+    }
+    if (type = 2) {
+      let xpos = 3;
+      let ypos = 0;
+      let squares[0] = Square.new(xpos + 1, ypos + 1);
+      let squares[1] = Square.new(xpos, ypos);
+      let squares[2] = Square.new(xpos + 1, ypos);
+      let squares[3] = Square.new(xpos + 2, ypos);
+    }
+    if (type = 3) {
+      let xpos = 4;
+      let ypos = 0;
+
+      let squares[0] = Square.new(xpos, ypos + 2);
+      let squares[1] = Square.new(xpos + 1, ypos + 2);
+      let squares[2] = Square.new(xpos + 1, ypos + 1);
+      let squares[3] = Square.new(xpos + 1, ypos);
+    }
+    if (type = 4) {
+      let xpos = 4;
+      let ypos = 0;
+      let squares[0] = Square.new(xpos, ypos + 2);
+      let squares[1] = Square.new(xpos + 1, ypos + 2);
+      let squares[2] = Square.new(xpos, ypos + 1);
+      let squares[3] = Square.new(xpos, ypos);
+    }
+    if (type = 5) {
+      let xpos = 3;
+      let ypos = 0;
+      let squares[0] = Square.new(xpos, ypos + 1);
+      let squares[1] = Square.new(xpos + 1, ypos + 1);
+      let squares[2] = Square.new(xpos + 1, ypos);
+      let squares[3] = Square.new(xpos + 2, ypos);
+    }
+    if (type = 6) {
+      let xpos = 3;
+      let ypos = 0;
+
+      let squares[0] = Square.new(xpos + 1, ypos + 1);
+      let squares[1] = Square.new(xpos + 2, ypos + 1);
+      let squares[2] = Square.new(xpos, ypos);
+      let squares[3] = Square.new(xpos + 1, ypos);
+    }
     return;
   }
 
