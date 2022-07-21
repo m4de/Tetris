@@ -92,36 +92,67 @@ class Playfield {
 
   /** Checks if there is space for a tetromino in the given direction */
   method boolean isSpace(Tetromino tetromino, int direction) {
-    var boolean isSpace;
+    var Array row;
+    var Array squares;
+    var Square square;
     var int xpos;
     var int ypos;
     var int xdest;
     var int ydest;
-    let isSpace = false;
-    let xpos = tetromino.getXpos();
-    let ypos = tetromino.getYpos();
+    var boolean isSpace;
+    var int i;
+    let squares = tetromino.getSquares();
+    let isSpace = true;
+    let i = 0;
     if (direction = 2) {
-      let ydest = ypos + 1;
-      if (ydest < (getHeight() - 1)) {
-        if ((getSquare(xpos, ydest + 1) = null) & (getSquare(xpos + 1, ydest + 1) = null)) {
-          let isSpace = true;
+      while (isSpace & (i < 4)) {
+        let square = squares[i];
+        let xpos = square.getXpos();
+        let ypos = square.getYpos();
+        let ydest = ypos + 1;
+        if (ydest < gridHeight) {
+          let row = grid[ydest];
+          if (~(row[xpos] = null)) {
+            let isSpace = false;
+          }
+        } else {
+          let isSpace = false;
         }
+        let i = i + 1;
       }
     }
     if (direction = 3) {
-      let xdest = xpos - 1;
-      if (xdest > (-(1))) {
-        if ((getSquare(xpos - 1, ypos) = null) & (getSquare(xpos - 1, ypos + 1) = null)) {
-          let isSpace = true;
+      while (isSpace & (i < 4)) {
+        let square = squares[i];
+        let xpos = square.getXpos();
+        let ypos = square.getYpos();
+        let xdest = xpos - 1;
+        if (xdest > (-1)) {
+          let row = grid[ypos];
+          if (~(row[xdest] = null)) {
+            let isSpace = false;
+          }
+        } else {
+          let isSpace = false;
         }
+        let i = i + 1;
       }
     }
     if (direction = 4) {
-      let xdest = xpos + 1;
-      if ((xdest + 1) < getWidth()) {
-        if ((getSquare(xpos + 1, ypos) = null) & (getSquare(xpos + 1, ypos + 1) = null)) {
-          let isSpace = true;
+      while (isSpace & (i < 4)) {
+        let square = squares[i];
+        let xpos = square.getXpos();
+        let ypos = square.getYpos();
+        let xdest = xpos + 1;
+        if (xdest < gridWidth) {
+          let row = grid[ypos];
+          if (~(row[xdest] = null)) {
+            let isSpace = false;
+          }
+        } else {
+          let isSpace = false;
         }
+        let i = i + 1;
       }
     }
     return isSpace;
