@@ -5,13 +5,9 @@ class Tetromino {
 
   field int xpos, ypos; // position of the square in the 10*18 grid
 
-  constructor Tetromino new() {
-    var int type;
+  constructor Tetromino new(int type) {
     let numberOfSquares = 4;
     let squares = Array.new(numberOfSquares);
-
-    let type = Random.randRange(6);
-
     do setType(type);
     do draw();
     return this;

@@ -12,6 +12,7 @@ class TetrisGame {
 
   field Playfield playfield;
   field Tetromino tetromino;
+  field int nextType;
 
   field int score;
 
@@ -29,6 +30,7 @@ class TetrisGame {
     let playfield = Playfield.new();
     let score = 0;
     do Random.setSeed(1638);
+    let nextType = Random.randRange(6);
     return this;
   }
 
@@ -82,8 +84,6 @@ class TetrisGame {
     do Output.printString("Score:");
     do Output.moveCursor(15,50);
     do Output.printString("Next:");
-    do Screen.setColor(true);
-    do Screen.drawRectangle(410, 190, 410 + 14, 190 + 14);
     return;
   }
 
@@ -103,7 +103,9 @@ class TetrisGame {
     do Output.moveCursor(10,46);
     do Output.printString("             ");
 
-    let tetromino = Tetromino.new();
+    let tetromino = Tetromino.new(nextType);
+    let nextType = Random.randRange(6);
+    do drawNextTetromino();
     let direction = down;
 
     do pause(false);
@@ -229,7 +231,9 @@ class TetrisGame {
       do Output.moveCursor(10,46);
       do Output.printString("* GAME OVER *");
     } else {
-      let tetromino = Tetromino.new();
+      let tetromino = Tetromino.new(nextType);
+      let nextType = Random.randRange(6);
+      do drawNextTetromino();
     }
     return;
   }
@@ -238,6 +242,42 @@ class TetrisGame {
   method void drawScore() {
     do Output.moveCursor(6,52);
     do Output.printInt(score);
+    return;
+  }
+
+  /** Draws the next tetromino on the screen. */
+  method void drawNextTetromino() {
+    // erase the previous one
+    do Screen.setColor(false);
+    do Screen.drawRectangle(410-14, 190, 410 + 42, 190 + 42);
+
+    do Screen.setColor(true);
+    if (nextType = 0) {
+      do Screen.drawRectangle(410, 190, 410 + 28, 190 + 28);
+    }
+    if (nextType = 1) {
+      do Screen.drawRectangle(410 - 14, 190, 410 + 28, 190 + 14);
+    }
+    if (nextType = 2) {
+      do Screen.drawRectangle(410 - 14, 190, 410 + 28, 190 + 14);
+      do Screen.drawRectangle(410, 190 + 14, 410 + 14, 190 + 28);
+    }
+    if (nextType = 3) {
+      do Screen.drawRectangle(410 + 14, 190, 410 + 28, 190 + 42);
+      do Screen.drawRectangle(410, 190 + 28, 410 + 14, 190 + 42);
+    }
+    if (nextType = 4) {
+      do Screen.drawRectangle(410, 190, 410 + 14, 190 + 42);
+      do Screen.drawRectangle(410 + 14, 190 + 28, 410 + 28, 190 + 42);
+    }
+    if (nextType = 5) {
+      do Screen.drawRectangle(410, 190, 410 + 28, 190 + 14);
+      do Screen.drawRectangle(410 - 14, 190 + 14, 410 + 14, 190 + 28);
+    }
+    if (nextType = 6) {
+      do Screen.drawRectangle(410 - 14, 190, 410 + 14, 190 + 14);
+      do Screen.drawRectangle(410, 190 + 14, 410 + 28, 190 + 28);
+    }
     return;
   }
 }
