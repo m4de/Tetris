@@ -208,10 +208,10 @@ class TetrisGame {
       }
       if (full) {
         do playfield.clearRow(i);
-        let k = 0;
-        while (k < i) {
+        let k = i;
+        while (k > 0) {
           do playfield.shiftRow(k);
-          let k = k + 1;
+          let k = k - 1;
         }
         let lines = lines + 1;
       }

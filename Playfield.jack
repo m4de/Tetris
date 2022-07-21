@@ -180,17 +180,17 @@ class Playfield {
   method void shiftRow(int rowIndex) {
     var int j;
     var Array row;
-    var Array nextRow;
+    var Array prevRow;
     var Square s;
     let row = grid[rowIndex];
-    let nextRow = grid[rowIndex + 1];
+    let prevRow = grid[rowIndex - 1];
     let j = 0;
     while (j < gridWidth) {
-      if (~(row[j] = null)) {
-        let s = row[j];
+      if (~(prevRow[j] = null)) {
+        let s = prevRow[j];
         do s.moveDown();
-        let row[j] = null;
-        let nextRow[j] = s;
+        let prevRow[j] = null;
+        let row[j] = s;
       }
       let j = j + 1;
     }
