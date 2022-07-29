@@ -116,6 +116,7 @@ class TetrisGame {
         let key = Keyboard.keyPressed();
         do moveTetromino();
       }
+      if (key = 32) { do rotateTetromino(); }       // space bar
       if (key = 78) { do newGame(); }       // n key
       if (key = 80) { do pause(~paused); }  // p key
       if (key = 81) { do quit(); }          // q key
@@ -183,6 +184,13 @@ class TetrisGame {
       let direction = down;
     }
     do Sys.wait(100); // delays the next movement
+    return;
+  }
+
+  method void rotateTetromino() {
+    if (playfield.canRotate(tetromino)) {
+      do tetromino.rotate();
+    }
     return;
   }
 
@@ -256,7 +264,7 @@ class TetrisGame {
       do Screen.drawRectangle(410, 190, 410 + 28, 190 + 28);
     }
     if (nextType = 1) {
-      do Screen.drawRectangle(410 - 14, 190, 410 + 28, 190 + 14);
+      do Screen.drawRectangle(410 - 14, 190, 410 + 42, 190 + 14);
     }
     if (nextType = 2) {
       do Screen.drawRectangle(410 - 14, 190, 410 + 28, 190 + 14);

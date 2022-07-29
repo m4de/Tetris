@@ -208,4 +208,17 @@ class Playfield {
     }
     return full;
   }
+
+  /** Checks if the tetromino can be rotated. */
+  method boolean canRotate(Tetromino tetromino) {
+    var int type;
+    var boolean canRotate;
+    let type = tetromino.getType();
+    let canRotate = true;
+    if (type = 0) {
+      let canRotate = false;
+    }
+    // TODO: check if tetromino can actually be rotated
+    return canRotate;
+  }
 }
