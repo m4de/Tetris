@@ -1,9 +1,7 @@
 /** Implements a graphical square. */
 class Square {
 
-  field int x, y; // screen location of the square's top-left corner
   field int size; // length of this square, in pixels
-
   field int xpos, ypos; // position of the square in the 10*18 grid
 
   field int xOffset;
@@ -16,9 +14,6 @@ class Square {
     let yOffset = 3;
     let xpos = Axpos;
     let ypos = Aypos;
-    let x = xOffset + (xpos * size);
-    let y = yOffset + (ypos * size);
-    do draw();
     return this;
   }
 
@@ -30,6 +25,10 @@ class Square {
 
   /** Draws the square on the screen. */
   method void draw() {
+    var int x;
+    var int y;
+    let x = xOffset + (xpos * size);
+    let y = yOffset + (ypos * size);
     do Screen.setColor(true);
     do Screen.drawRectangle(x, y, x + size, y + size);
     return;
@@ -37,6 +36,10 @@ class Square {
 
   /** Erases the square from the screen. */
   method void erase() {
+    var int x;
+    var int y;
+    let x = xOffset + (xpos * size);
+    let y = yOffset + (ypos * size);
     do Screen.setColor(false);
     do Screen.drawRectangle(x, y, x + size, y + size);
     return;
@@ -46,7 +49,6 @@ class Square {
   method void moveDown() {
     do erase();
     let ypos = ypos + 1;
-    let y = yOffset + (ypos * size);
     do draw();
     return;
   }
@@ -54,18 +56,16 @@ class Square {
   /** Moves the square left by `size` pixels. */
   method void moveLeft() {
     do erase();
-    let x = x - size;
-    do draw();
     let xpos = xpos - 1;
+    do draw();
     return;
   }
 
   /** Moves the square right by `size` pixels. */
   method void moveRight() {
     do erase();
-    let x = x + size;
-    do draw();
     let xpos = xpos + 1;
+    do draw();
     return;
   }
 
@@ -75,5 +75,15 @@ class Square {
 
   method int getYpos() {
     return ypos;
+  }
+
+  method void setXpos(int xpo) {
+    let xpos = xpo;
+    return;
+  }
+
+  method void setYpos(int ypo) {
+    let ypos = ypo;
+    return;
   }
 }

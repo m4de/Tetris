@@ -2,6 +2,8 @@ class Tetromino {
 
   field int numberOfSquares;
   field Array squares;
+  field int t;
+  field int orientation;
 
   field int xpos, ypos; // position of the square in the 10*18 grid
 
@@ -9,6 +11,7 @@ class Tetromino {
     let numberOfSquares = 4;
     let squares = Array.new(numberOfSquares);
     do setType(type);
+    let orientation = 0;
     do draw();
     return this;
   }
@@ -20,13 +23,14 @@ class Tetromino {
   }
 
   method void setType(int type) {
+    let t = type;
     if (type = 0) {
       let xpos = 4;
       let ypos = 0;
-      let squares[2] = Square.new(xpos, ypos);
-      let squares[0] = Square.new(xpos, ypos + 1);
-      let squares[3] = Square.new(xpos + 1, ypos);
-      let squares[1] = Square.new(xpos + 1, ypos + 1);
+      let squares[0] = Square.new(xpos, ypos);
+      let squares[1] = Square.new(xpos + 1, ypos);
+      let squares[2] = Square.new(xpos, ypos + 1);
+      let squares[3] = Square.new(xpos + 1, ypos + 1);
     }
     if (type = 1) {
       let xpos = 3;
@@ -39,44 +43,42 @@ class Tetromino {
     if (type = 2) {
       let xpos = 3;
       let ypos = 0;
-      let squares[0] = Square.new(xpos + 1, ypos + 1);
-      let squares[1] = Square.new(xpos, ypos);
-      let squares[2] = Square.new(xpos + 1, ypos);
-      let squares[3] = Square.new(xpos + 2, ypos);
+      let squares[0] = Square.new(xpos, ypos);
+      let squares[1] = Square.new(xpos + 1, ypos);
+      let squares[2] = Square.new(xpos + 2, ypos);
+      let squares[3] = Square.new(xpos + 1, ypos + 1);
     }
     if (type = 3) {
       let xpos = 4;
       let ypos = 0;
-
-      let squares[0] = Square.new(xpos, ypos + 2);
-      let squares[1] = Square.new(xpos + 1, ypos + 2);
-      let squares[2] = Square.new(xpos + 1, ypos + 1);
-      let squares[3] = Square.new(xpos + 1, ypos);
+      let squares[0] = Square.new(xpos + 1, ypos);
+      let squares[1] = Square.new(xpos + 1, ypos + 1);
+      let squares[2] = Square.new(xpos + 1, ypos + 2);
+      let squares[3] = Square.new(xpos, ypos + 2);
     }
     if (type = 4) {
       let xpos = 4;
       let ypos = 0;
-      let squares[0] = Square.new(xpos, ypos + 2);
-      let squares[1] = Square.new(xpos + 1, ypos + 2);
-      let squares[2] = Square.new(xpos, ypos + 1);
-      let squares[3] = Square.new(xpos, ypos);
+      let squares[0] = Square.new(xpos, ypos);
+      let squares[1] = Square.new(xpos, ypos + 1);
+      let squares[2] = Square.new(xpos, ypos + 2);
+      let squares[3] = Square.new(xpos + 1, ypos + 2);
     }
     if (type = 5) {
       let xpos = 3;
       let ypos = 0;
-      let squares[0] = Square.new(xpos, ypos + 1);
-      let squares[1] = Square.new(xpos + 1, ypos + 1);
-      let squares[2] = Square.new(xpos + 1, ypos);
-      let squares[3] = Square.new(xpos + 2, ypos);
+      let squares[0] = Square.new(xpos + 1, ypos);
+      let squares[1] = Square.new(xpos + 2, ypos);
+      let squares[2] = Square.new(xpos, ypos + 1);
+      let squares[3] = Square.new(xpos + 1, ypos + 1);
     }
     if (type = 6) {
       let xpos = 3;
       let ypos = 0;
-
-      let squares[0] = Square.new(xpos + 1, ypos + 1);
-      let squares[1] = Square.new(xpos + 2, ypos + 1);
-      let squares[2] = Square.new(xpos, ypos);
-      let squares[3] = Square.new(xpos + 1, ypos);
+      let squares[0] = Square.new(xpos, ypos);
+      let squares[1] = Square.new(xpos + 1, ypos);
+      let squares[2] = Square.new(xpos + 1, ypos + 1);
+      let squares[3] = Square.new(xpos + 2, ypos + 1);
     }
     return;
   }
@@ -85,11 +87,11 @@ class Tetromino {
   method void draw() {
     var int i;
     var Square square;
-    let i = 0;
-    while (i < numberOfSquares) {
+    let i = numberOfSquares - 1;
+    while (i > -1) {
       let square = squares[i];
       do square.draw();
-      let i = i + 1;
+      let i = i - 1;
     }
     return;
   }
@@ -111,11 +113,11 @@ class Tetromino {
   method void moveDown() {
     var int i;
     var Square square;
-    let i = 0;
-    while (i < numberOfSquares) {
+    let i = numberOfSquares - 1;
+    while (i > -1) {
       let square = squares[i];
       do square.moveDown();
-      let i = i + 1;
+      let i = i - 1;
     }
     let ypos = ypos + 1;
     return;
@@ -159,5 +161,125 @@ class Tetromino {
 
   method Array getSquares() {
     return squares;
+  }
+
+  /** Gets the tetromino type. */
+  method int getType() {
+    return t;
+  }
+
+  /** Returns the direction of the */
+  method int getOrientation() {
+    return orientation;
+  }
+
+  /** Rotates the tetromino. */
+  method void rotate() {
+    var Square s0;
+    var Square s1;
+    var Square s2;
+    var Square s3;
+    var int xp;
+    var int yp;
+    var int i;
+
+    do erase();
+    if (t = 1) {
+      if (orientation = 0) {
+        let s0 = squares[0];
+        let xp = s0.getXpos();
+        let yp = s0.getYpos();
+        let s1 = squares[1];
+        do s1.setXpos(xp);
+        do s1.setYpos(yp + 1);
+        let s2 = squares[2];
+        do s2.setXpos(xp);
+        do s2.setYpos(yp + 2);
+        let s3 = squares[3];
+        do s3.setXpos(xp);
+        do s3.setYpos(yp + 3);
+      }
+      if (orientation = 1) {
+        let s0 = squares[0];
+        let xp = s0.getXpos();
+        let yp = s0.getYpos();
+        let s1 = squares[1];
+        do s1.setXpos(xp + 1);
+        do s1.setYpos(yp);
+        let s2 = squares[2];
+        do s2.setXpos(xp + 2);
+        do s2.setYpos(yp);
+        let s3 = squares[3];
+        do s3.setXpos(xp + 3);
+        do s3.setYpos(yp);
+      }
+    }
+    if (t = 5) {
+      if (orientation = 0) {
+        let s0 = squares[0];
+        let xp = s0.getXpos();
+        let yp = s0.getYpos();
+        let s1 = squares[1];
+        do s1.setXpos(xp);
+        do s1.setYpos(yp + 1);
+        let s2 = squares[2];
+        do s2.setXpos(xp + 1);
+        do s2.setYpos(yp + 1);
+        let s3 = squares[3];
+        do s3.setXpos(xp + 1);
+        do s3.setYpos(yp + 2);
+      }
+      if (orientation = 1) {
+        let s0 = squares[0];
+        let xp = s0.getXpos();
+        let yp = s0.getYpos();
+        let s1 = squares[1];
+        do s1.setXpos(xp + 1);
+        do s1.setYpos(yp);
+        let s2 = squares[2];
+        do s2.setXpos(xp + 1);
+        do s2.setYpos(yp - 1);
+        let s3 = squares[3];
+        do s3.setXpos(xp + 2);
+        do s3.setYpos(yp - 1);
+      }
+    }
+    if (t = 6) {
+      if (orientation = 0) {
+        let s0 = squares[0];
+        let xp = s0.getXpos();
+        let yp = s0.getYpos();
+        let s1 = squares[1];
+        do s1.setXpos(xp);
+        do s1.setYpos(yp + 1);
+        let s2 = squares[2];
+        do s2.setXpos(xp - 1);
+        do s2.setYpos(yp + 1);
+        let s3 = squares[3];
+        do s3.setXpos(xp - 1);
+        do s3.setYpos(yp + 2);
+      }
+      if (orientation = 1) {
+        let s0 = squares[0];
+        let xp = s0.getXpos();
+        let yp = s0.getYpos();
+        let s1 = squares[1];
+        do s1.setXpos(xp + 1);
+        do s1.setYpos(yp);
+        let s2 = squares[2];
+        do s2.setXpos(xp + 1);
+        do s2.setYpos(yp + 1);
+        let s3 = squares[3];
+        do s3.setXpos(xp + 2);
+        do s3.setYpos(yp + 1);
+      }
+    }
+    do draw();
+    if (orientation = 0) {
+      let orientation = 1;
+    } else {
+      let orientation = 0;
+    }
+    return;
   }
 }
