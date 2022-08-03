@@ -214,6 +214,182 @@ class Tetromino {
         do s3.setYpos(yp);
       }
     }
+    if (t = 2) {
+      if (orientation = 0) {
+        let s0 = squares[0];
+        let xp = s0.getXpos();
+        let yp = s0.getYpos();
+        do s0.setXpos(xp);
+        do s0.setYpos(yp - 1);
+        let s1 = squares[1];
+        do s1.setXpos(xp - 1);
+        do s1.setYpos(yp);
+        let s2 = squares[2];
+        do s2.setXpos(xp);
+        do s2.setYpos(yp);
+        let s3 = squares[3];
+        do s3.setXpos(xp);
+        do s3.setYpos(yp + 1);
+      }
+      if (orientation = 1) {
+        let s0 = squares[0];
+        let xp = s0.getXpos();
+        let yp = s0.getYpos();
+        let s1 = squares[1];
+        do s1.setXpos(xp - 1);
+        do s1.setYpos(yp + 1);
+        let s2 = squares[2];
+        do s2.setXpos(xp);
+        do s2.setYpos(yp + 1);
+        let s3 = squares[3];
+        do s3.setXpos(xp + 1);
+        do s3.setYpos(yp + 1);
+      }
+      if (orientation = 2) {
+        let s0 = squares[0];
+        let xp = s0.getXpos();
+        let yp = s0.getYpos();
+        let s1 = squares[1];
+        do s1.setXpos(xp);
+        do s1.setYpos(yp + 1);
+        let s2 = squares[2];
+        do s2.setXpos(xp + 1);
+        do s2.setYpos(yp + 1);
+        let s3 = squares[3];
+        do s3.setXpos(xp);
+        do s3.setYpos(yp + 2);
+      }
+      if (orientation = 3) {
+        let s0 = squares[0];
+        let xp = s0.getXpos();
+        let yp = s0.getYpos();
+        let s1 = squares[1];
+        do s1.setXpos(xp + 1);
+        do s1.setYpos(yp);
+        let s2 = squares[2];
+        do s2.setXpos(xp + 2);
+        do s2.setYpos(yp);
+        let s3 = squares[3];
+        do s3.setXpos(xp + 1);
+        do s3.setYpos(yp + 1);
+      }
+    }
+    if (t = 3) {
+      if (orientation = 0) {
+        let s0 = squares[0];
+        let xp = s0.getXpos();
+        let yp = s0.getYpos();
+        let s1 = squares[1];
+        do s1.setXpos(xp);
+        do s1.setYpos(yp + 1);
+        let s2 = squares[2];
+        do s2.setXpos(xp + 1);
+        do s2.setYpos(yp + 1);
+        let s3 = squares[3];
+        do s3.setXpos(xp + 2);
+        do s3.setYpos(yp + 1);
+      }
+      if (orientation = 1) {
+        let s0 = squares[0];
+        let xp = s0.getXpos();
+        let yp = s0.getYpos();
+        let s1 = squares[1];
+        do s1.setXpos(xp + 1);
+        do s1.setYpos(yp);
+        let s2 = squares[2];
+        do s2.setXpos(xp);
+        do s2.setYpos(yp + 1);
+        let s3 = squares[3];
+        do s3.setXpos(xp);
+        do s3.setYpos(yp + 2);
+      }
+      if (orientation = 2) {
+        let s0 = squares[0];
+        let xp = s0.getXpos();
+        let yp = s0.getYpos();
+        let s1 = squares[1];
+        do s1.setXpos(xp + 1);
+        do s1.setYpos(yp);
+        let s2 = squares[2];
+        do s2.setXpos(xp + 2);
+        do s2.setYpos(yp);
+        let s3 = squares[3];
+        do s3.setXpos(xp);
+        do s3.setYpos(yp + 1);
+      }
+      if (orientation = 3) {
+        let s0 = squares[0];
+        let xp = s0.getXpos();
+        let yp = s0.getYpos();
+        let s1 = squares[1];
+        do s1.setXpos(xp);
+        do s1.setYpos(yp + 1);
+        let s2 = squares[2];
+        do s2.setXpos(xp);
+        do s2.setYpos(yp + 2);
+        let s3 = squares[3];
+        do s3.setXpos(xp - 1);
+        do s3.setYpos(yp + 2);
+      }
+    }
+    if (t = 4) {
+      if (orientation = 0) {
+        let s0 = squares[0];
+        let xp = s0.getXpos();
+        let yp = s0.getYpos();
+        let s1 = squares[1];
+        do s1.setXpos(xp + 1);
+        do s1.setYpos(yp);
+        let s2 = squares[2];
+        do s2.setXpos(xp + 2);
+        do s2.setYpos(yp);
+        let s3 = squares[3];
+        do s3.setXpos(xp);
+        do s3.setYpos(yp + 1);
+      }
+      if (orientation = 1) {
+        let s0 = squares[0];
+        let xp = s0.getXpos();
+        let yp = s0.getYpos();
+        let s1 = squares[1];
+        do s1.setXpos(xp + 1);
+        do s1.setYpos(yp);
+        let s2 = squares[2];
+        do s2.setXpos(xp + 1);
+        do s2.setYpos(yp + 1);
+        let s3 = squares[3];
+        do s3.setXpos(xp + 1);
+        do s3.setYpos(yp + 2);
+      }
+      if (orientation = 2) {
+        let s0 = squares[0];
+        let xp = s0.getXpos();
+        let yp = s0.getYpos();
+        let s1 = squares[1];
+        do s1.setXpos(xp - 2);
+        do s1.setYpos(yp + 1);
+        let s2 = squares[2];
+        do s2.setXpos(xp - 1);
+        do s2.setYpos(yp + 1);
+        let s3 = squares[3];
+        do s3.setXpos(xp);
+        do s3.setYpos(yp + 1);
+      }
+      if (orientation = 3) {
+        let s0 = squares[0];
+        let xp = s0.getXpos();
+        let yp = s0.getYpos();
+        let s1 = squares[1];
+        do s1.setXpos(xp);
+        do s1.setYpos(yp + 1);
+        let s2 = squares[2];
+        do s2.setXpos(xp);
+        do s2.setYpos(yp + 2);
+        let s3 = squares[3];
+        do s3.setXpos(xp + 1);
+        do s3.setYpos(yp + 2);
+      }
+    }
     if (t = 5) {
       if (orientation = 0) {
         let s0 = squares[0];
@@ -275,10 +451,32 @@ class Tetromino {
       }
     }
     do draw();
-    if (orientation = 0) {
-      let orientation = 1;
-    } else {
-      let orientation = 0;
+
+
+    if (t = 1 | t = 5 | t = 6) {
+      if (orientation = 0) {
+        let orientation = 1;
+      } else {
+        let orientation = 0;
+      }
+    }
+
+    if (t = 2 | t = 3 | t = 4) {
+      if (orientation = 0) {
+        let orientation = 1;
+      } else {
+        if (orientation = 1) {
+          let orientation = 2;
+        } else {
+          if (orientation = 2) {
+            let orientation = 3;
+          } else {
+            if (orientation = 3) {
+              let orientation = 0;
+            }
+          }
+        }
+      }
     }
     return;
   }
