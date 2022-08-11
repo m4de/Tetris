@@ -65,19 +65,31 @@ class TetrisGame {
 
   /** Draws the user interface. */
   method void drawUI() {
+    // print logo
+    do Output.moveCursor(2,1);
+    do Output.printString("TTT EEE TTT RR  I SSS");
+    do Output.moveCursor(3,1);
+    do Output.printString(" T  E    T  R R I S  ");
+    do Output.moveCursor(4,1);
+    do Output.printString(" T  EE   T  RR  I SSS");
+    do Output.moveCursor(5,1);
+    do Output.printString(" T  E    T  R R I   S");
+    do Output.moveCursor(6,1);
+    do Output.printString(" T  EEE  T  R R I SSS");
     // print menu
-    do Output.moveCursor(6,8);
-    do Output.printString("Tetris");
-    do Output.moveCursor(9,6);
-    do Output.printString("(N)ew Game");
-    do Output.moveCursor(11,6);
-    do Output.printString("(P)ause");
-    do Output.moveCursor(13,6);
+    do Output.moveCursor(10,6);
+    do Output.printString("[N]ew Game");
+    do Output.moveCursor(12,6);
+    do Output.printString("[P]ause");
+    do Output.moveCursor(14,6);
     do Output.printString("<=> Move");
-    do Output.moveCursor(15,6);
-    do Output.printString("(Q)uit");
+    do Output.moveCursor(16,6);
+    do Output.printString("SB Rotate");
+    do Output.moveCursor(18,6);
+    do Output.printString("[Q]uit");
     // draw playing field
     do Screen.drawRectangle(181,0,185,255);
+    do Screen.drawRectangle(186,253,326,255);
     do Screen.drawRectangle(327,0,331,255);
     // print right menu
     do Output.moveCursor(4,50);

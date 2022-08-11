@@ -108,11 +108,13 @@ class Tetromino {
     var int i;
     var Square square;
     let i = numberOfSquares - 1;
+    do erase();
     while (i > -1) {
       let square = squares[i];
       do square.moveDown();
       let i = i - 1;
     }
+    do draw();
     return;
   }
 
@@ -121,11 +123,13 @@ class Tetromino {
     var int i;
     var Square square;
     let i = 0;
+    do erase();
     while (i < numberOfSquares) {
       let square = squares[i];
       do square.moveLeft();
       let i = i + 1;
     }
+    do draw();
     return;
   }
 
@@ -134,11 +138,13 @@ class Tetromino {
     var int i;
     var Square square;
     let i = 0;
+    do erase();
     while (i < numberOfSquares) {
       let square = squares[i];
       do square.moveRight();
       let i = i + 1;
     }
+    do draw();
     return;
   }
 

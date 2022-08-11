@@ -127,13 +127,15 @@ class Playfield {
         let xpos = square.getXpos();
         let ypos = square.getYpos();
         let xdest = xpos - 1;
-        if (xdest > (-1)) {
-          let row = grid[ypos];
-          if (~(row[xdest] = null)) {
+        if (ypos > 0) {
+          if (xdest > (-1)) {
+            let row = grid[ypos];
+            if (~(row[xdest] = null)) {
+              let isSpace = false;
+            }
+          } else {
             let isSpace = false;
           }
-        } else {
-          let isSpace = false;
         }
         let i = i + 1;
       }
@@ -144,13 +146,15 @@ class Playfield {
         let xpos = square.getXpos();
         let ypos = square.getYpos();
         let xdest = xpos + 1;
-        if (xdest < gridWidth) {
-          let row = grid[ypos];
-          if (~(row[xdest] = null)) {
+        if (ypos > 0) {
+          if (xdest < gridWidth) {
+            let row = grid[ypos];
+            if (~(row[xdest] = null)) {
+              let isSpace = false;
+            }
+          } else {
             let isSpace = false;
           }
-        } else {
-          let isSpace = false;
         }
         let i = i + 1;
       }
@@ -212,11 +216,24 @@ class Playfield {
   /** Checks if the tetromino can be rotated. */
   method boolean canRotate(Tetromino tetromino) {
     var int type;
+    var int orientation;
     var boolean canRotate;
+    var Array squares;
+    var Square s;
     let type = tetromino.getType();
+    let orientation = tetromino.getOrientation();
+    let squares = tetromino.getSquares();
     let canRotate = true;
     if (type = 0) {
       let canRotate = false;
+    }
+    if (type = 1) {
+      if (orientation = 1) {
+        let s = squares[0];
+        if (s.getXpos() > 6) {
+          let canRotate = false;
+        }
+      }
     }
     // TODO: check if tetromino can actually be rotated
     return canRotate;

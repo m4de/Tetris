@@ -5,13 +5,11 @@ class Square {
   field int xpos, ypos; // position of the square in the 10*18 grid
 
   field int xOffset;
-  field int yOffset;
 
   /** Constructs a new square with a given location and size. */
   constructor Square new(int Axpos, int Aypos) {
     let size = 14;
     let xOffset = 186;
-    let yOffset = 3;
     let xpos = Axpos;
     let ypos = Aypos;
     return this;
@@ -28,7 +26,7 @@ class Square {
     var int x;
     var int y;
     let x = xOffset + (xpos * size);
-    let y = yOffset + (ypos * size);
+    let y = ypos * size;
     do Screen.setColor(true);
     do Screen.drawRectangle(x, y, x + size, y + size);
     return;
@@ -39,7 +37,7 @@ class Square {
     var int x;
     var int y;
     let x = xOffset + (xpos * size);
-    let y = yOffset + (ypos * size);
+    let y = ypos * size;
     do Screen.setColor(false);
     do Screen.drawRectangle(x, y, x + size, y + size);
     return;
@@ -47,25 +45,19 @@ class Square {
 
   /** Moves the square down by `size` pixels. */
   method void moveDown() {
-    do erase();
     let ypos = ypos + 1;
-    do draw();
     return;
   }
 
   /** Moves the square left by `size` pixels. */
   method void moveLeft() {
-    do erase();
     let xpos = xpos - 1;
-    do draw();
     return;
   }
 
   /** Moves the square right by `size` pixels. */
   method void moveRight() {
-    do erase();
     let xpos = xpos + 1;
-    do draw();
     return;
   }
 
