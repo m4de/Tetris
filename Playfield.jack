@@ -192,7 +192,9 @@ class Playfield {
     while (j < gridWidth) {
       if (~(prevRow[j] = null)) {
         let s = prevRow[j];
+        do s.erase();
         do s.moveDown();
+        do s.draw();
         let prevRow[j] = null;
         let row[j] = s;
       }
