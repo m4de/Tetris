@@ -14,7 +14,8 @@ class TetrisGame {
   field Tetromino tetromino;
   field int nextType;
 
-  field int score;
+  field int level;
+  field int lines;
 
   field int samplerate;
   field int counter;
@@ -30,7 +31,6 @@ class TetrisGame {
     let paused = false;
     let gameOver = true;
     let playfield = Playfield.new();
-    let score = 0;
     let samplerate = 100;
     let counter = 0;
     let delay = 1000;
@@ -98,7 +98,9 @@ class TetrisGame {
     do Screen.drawRectangle(327,0,331,255);
     // print right menu
     do Output.moveCursor(4,50);
-    do Output.printString("Score:");
+    do Output.printString("Level:");
+    do Output.moveCursor(9,50);
+    do Output.printString("Lines:");
     do Output.moveCursor(15,50);
     do Output.printString("Next:");
     return;
@@ -114,8 +116,10 @@ class TetrisGame {
       do tetromino.erase();
     }
 
-    let score = 0;
-    do drawScore();
+    let level = 0;
+    do drawLevel();
+    let lines = 0;
+    do drawLines();
 
     do Output.moveCursor(10,46);
     do Output.printString("             ");
@@ -221,11 +225,9 @@ class TetrisGame {
     var int i;
     var int j;
     var int k;
-    var int lines;
     var boolean full;
     var Array grid;
     var Array row;
-    let lines = 0;
     let grid = playfield.getGrid();
     let i = 0;
     while (i < playfield.getHeight()) {
@@ -246,11 +248,15 @@ class TetrisGame {
           let k = k - 1;
         }
         let lines = lines + 1;
+        if (modulo(lines, 10) = 0) {
+          let level = level + 1;
+          do drawLevel();
+          let delay = delay - 100;
+        }
       }
       let i = i + 1;
     }
-    let score = score + lines;
-    do drawScore();
+    do drawLines();
     return;
   }
 
@@ -267,10 +273,21 @@ class TetrisGame {
     return;
   }
 
-  /** Draws the score on the screen. */
-  method void drawScore() {
+  /** Draws the current level on the screen. */
+  method void drawLevel() {
     do Output.moveCursor(6,52);
-    do Output.printInt(score);
+    do Output.printString("        ");
+    do Output.moveCursor(6,52);
+    do Output.printInt(level);
+    return;
+  }
+
+  /** Draws the score on the screen. */
+  method void drawLines() {
+    do Output.moveCursor(11,52);
+    do Output.printString("        ");
+    do Output.moveCursor(11,52);
+    do Output.printInt(lines);
     return;
   }
 
