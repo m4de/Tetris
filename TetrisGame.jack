@@ -96,9 +96,9 @@ class TetrisGame {
     do Screen.drawRectangle(186,253,326,255);
     do Screen.drawRectangle(327,0,331,255);
     // print right menu
-    do Output.moveCursor(4,50);
+    do Output.moveCursor(3,50);
     do Output.printString("Level:");
-    do Output.moveCursor(9,50);
+    do Output.moveCursor(8,50);
     do Output.printString("Lines:");
     do Output.moveCursor(15,50);
     do Output.printString("Next:");
@@ -168,12 +168,12 @@ class TetrisGame {
       if (pause) {
         let paused = true;
         let samplerate = 0;
-        do Output.moveCursor(10,48);
+        do Output.moveCursor(12,48);
         do Output.printString("* PAUSED *");
       } else {
         let paused = false;
         let samplerate = 100;
-        do Output.moveCursor(10,48);
+        do Output.moveCursor(12,48);
         do Output.printString("          ");
       }
     }
@@ -264,7 +264,7 @@ class TetrisGame {
   /** Checks if the game is over. */
   method void checkGameOver() {
     if (playfield.isFull()) {
-      do Output.moveCursor(10,46);
+      do Output.moveCursor(12,46);
       do Output.printString("* GAME OVER *");
     } else {
       let tetromino = Tetromino.new(nextType);
@@ -276,18 +276,18 @@ class TetrisGame {
 
   /** Draws the current level on the screen. */
   method void drawLevel() {
-    do Output.moveCursor(6,52);
+    do Output.moveCursor(5,52);
     do Output.printString("        ");
-    do Output.moveCursor(6,52);
+    do Output.moveCursor(5,52);
     do Output.printInt(level);
     return;
   }
 
   /** Draws the score on the screen. */
   method void drawLines() {
-    do Output.moveCursor(11,52);
+    do Output.moveCursor(10,52);
     do Output.printString("        ");
-    do Output.moveCursor(11,52);
+    do Output.moveCursor(10,52);
     do Output.printInt(lines);
     return;
   }
