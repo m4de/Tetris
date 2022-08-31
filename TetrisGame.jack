@@ -32,7 +32,6 @@ class TetrisGame {
     let gameOver = true;
     let playfield = Playfield.new();
     let samplerate = 100;
-    let counter = 0;
     let delay = 1000;
     do Random.setSeed(1638);
     let nextType = Random.randRange(6);
@@ -143,10 +142,12 @@ class TetrisGame {
       if (key = 132) { do moveTetromino(right); } // right arrow
       if (key = 133) { do moveTetromino(down); }  // down arrow
 
-      let counter = counter + samplerate;
       do Sys.wait(samplerate);
+
+      let counter = counter + samplerate;
       if (modulo(counter, delay) = 0) {
         do moveTetromino(down);
+        let counter = 0;
       }
     }
     return;
