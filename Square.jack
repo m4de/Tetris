@@ -21,14 +21,38 @@ class Square {
     return;
   }
 
+  /** Gets the horizontal position of this square. */
+  method int getX() {
+    return xpos;
+  }
+
+  /** Gets the vertical position of this square. */
+  method int getY() {
+    return ypos;
+  }
+
+  /** Sets the horizontal position of this square. */
+  method void setX(int xpo) {
+    let xpos = xpo;
+    return;
+  }
+
+  /** Sets the vertical position of this square. */
+  method void setY(int ypo) {
+    let ypos = ypo;
+    return;
+  }
+
   /** Draws the square on the screen. */
   method void draw() {
     var int x;
     var int y;
-    let x = xOffset + (xpos * size);
-    let y = ypos * size;
-    do Screen.setColor(true);
-    do Screen.drawRectangle(x, y, x + size, y + size);
+    if (ypos > -1) {
+      let x = xOffset + (xpos * size);
+      let y = ypos * size;
+      do Screen.setColor(true);
+      do Screen.drawRectangle(x, y, x + size, y + size);
+    }
     return;
   }
 
@@ -36,46 +60,12 @@ class Square {
   method void erase() {
     var int x;
     var int y;
-    let x = xOffset + (xpos * size);
-    let y = ypos * size;
-    do Screen.setColor(false);
-    do Screen.drawRectangle(x, y, x + size, y + size);
-    return;
-  }
-
-  /** Moves the square down by `size` pixels. */
-  method void moveDown() {
-    let ypos = ypos + 1;
-    return;
-  }
-
-  /** Moves the square left by `size` pixels. */
-  method void moveLeft() {
-    let xpos = xpos - 1;
-    return;
-  }
-
-  /** Moves the square right by `size` pixels. */
-  method void moveRight() {
-    let xpos = xpos + 1;
-    return;
-  }
-
-  method int getXpos() {
-    return xpos;
-  }
-
-  method int getYpos() {
-    return ypos;
-  }
-
-  method void setXpos(int xpo) {
-    let xpos = xpo;
-    return;
-  }
-
-  method void setYpos(int ypo) {
-    let ypos = ypo;
+    if (ypos > -1) {
+      let x = xOffset + (xpos * size);
+      let y = ypos * size;
+      do Screen.setColor(false);
+      do Screen.drawRectangle(x, y, x + size, y + size);
+    }
     return;
   }
 }

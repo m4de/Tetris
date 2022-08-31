@@ -1,0 +1,27 @@
+class Utils {
+
+  /** Prints an integer at the given position on the screen. */
+  function void printInt(int i, int x, int y) {
+    do Output.moveCursor(x,y);
+    do Output.printString("        ");
+    do Output.moveCursor(x,y);
+    do Output.printInt(i);
+    return;
+  }
+
+  /** Prints a string at the given position on the screen. */
+  function void printString(String s, int x, int y) {
+    do Output.moveCursor(x,y);
+    do Output.printString(s);
+    return;
+  }
+
+  function int modulo(int x, int y) {
+    var int result;
+    let result = x;
+    while ((result - y) > -1) {
+      let result = result - y;
+    }
+    return result;
+  }
+}
